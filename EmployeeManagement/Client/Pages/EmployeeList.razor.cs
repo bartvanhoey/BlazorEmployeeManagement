@@ -13,12 +13,10 @@ namespace EmployeeManagement.Client.Pages
 
         public bool ShowFooter { get; set; } = true;
 
-        protected override async Task OnInitializedAsync()
-        {
-            Employees = await EmployeeService.GetEmployees();
-
-            //await Task.Run(LoadEmployees);
-        }
+        protected override async Task OnInitializedAsync() 
+            => Employees = await EmployeeService.GetEmployees();
+        
+        //await Task.Run(LoadEmployees);
 
         protected void EmployeeChecked(bool isChecked)
         {
@@ -31,7 +29,10 @@ namespace EmployeeManagement.Client.Pages
             }
         }
 
-            
+        protected async Task EmployeeDeleted() 
+            => Employees = await EmployeeService.GetEmployees();
+
+
 
         protected int SelectedEmployeesCount { get; set; }
 

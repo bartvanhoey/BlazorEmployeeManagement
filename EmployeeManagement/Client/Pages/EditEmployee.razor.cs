@@ -26,7 +26,12 @@ namespace EmployeeManagement.Client.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
+        public string PageHeader { get; set; }
+
+
         protected List<Department> Departments { get; set; } = new List<Department>();
+
+
         protected async void SubmitEditEmployeeForm()
         {
             Mapper.Map(EditEmployeeModel, Employee);
@@ -35,10 +40,12 @@ namespace EmployeeManagement.Client.Pages
 
             if(Employee.EmployeeId == 0)
             {
+                PageHeader = "Create Employee";
                 result = await EmployeeService.CreateEmployee(Employee);
             }
             else
             {
+                PageHeader = "Edit Employee";
                 result = await EmployeeService.UpdateEmployee(Employee);
             }
 
@@ -87,6 +94,12 @@ namespace EmployeeManagement.Client.Pages
             //EditEmployeeModel.DepartmentId = Employee.DepartmentId;
             //EditEmployeeModel.Department = Employee.Department;
 
+        }
+
+        protected async Task DeleteEmployee()
+        {
+            await EmployeeService.DeleteEmployee(Employee.EmployeeId);
+            NavigationManager.NavigateTo("/");
         }
     }
 }

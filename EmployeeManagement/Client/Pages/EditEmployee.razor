@@ -6,7 +6,7 @@
 <EditForm Model="@EditEmployeeModel" OnValidSubmit="SubmitEditEmployeeForm" >
     <DataAnnotationsValidator/>
     <ValidationSummary/>
-    <h3>Edit Employee</h3>
+    <h3>@PageHeader</h3>
     <hr />
 
     <div class="form-group row">
@@ -90,6 +90,11 @@
     </div>
        
     <button type="submit" class="btn btn-primary" >Submit</button>
-   
+    @if(EditEmployeeModel.EmployeeId > 0)
+    {
+    <button type="button" class="btn btn-danger" onclick="DeleteEmployee" >Delete</button>
+        
+    }
+
 </EditForm>
 

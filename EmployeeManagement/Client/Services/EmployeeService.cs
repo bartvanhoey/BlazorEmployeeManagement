@@ -16,6 +16,9 @@ namespace EmployeeManagement.Client.Services
             return await response.Content.ReadFromJsonAsync<Employee>();
         }
 
+        public async Task DeleteEmployee(int employeeId) 
+            => await _http.DeleteAsync($"api/employees/{employeeId}");
+
         public async Task<Employee> GetEmployee(int id) 
             => await _http.GetFromJsonAsync<Employee>($"api/employees/{id}");
 
