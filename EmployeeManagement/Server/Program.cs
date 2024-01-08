@@ -24,7 +24,7 @@ namespace EmployeeManagement
             });
 
             builder.Services.AddDbContext<AppDbContext>(options =>
-             options.UseSqlServer("name=ConnectionStrings:DbConnection"));
+             options.UseSqlServer("name=ConnectionStrings:DbConnection").EnableSensitiveDataLogging());
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

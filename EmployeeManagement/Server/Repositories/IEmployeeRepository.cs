@@ -4,7 +4,7 @@ namespace EmployeeManagement.API.Repositories
 {
     public interface IEmployeeRepository
     {
-        Task<IEnumerable<Employee>> GetEmployees();
+        Task<EmployeeDataResult> GetEmployees(int skip, int take);
         Task<Employee?> GetEmployee(int employeeId);
         Task<Employee> AddEmployee(Employee employee);
         Task<Employee?> UpdateEmployee(Employee employee);

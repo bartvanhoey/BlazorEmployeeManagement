@@ -14,17 +14,34 @@ namespace EmployeeManagement.Server.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        [Route("paged")]
+        public async Task<ActionResult> GetPagedEmployees(int skip = 0, int take = 5)
         {
             try
             {
-                return Ok(await _repo.GetEmployees());
+                return Ok(await _repo.GetEmployees(skip, take));
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
         }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetPagedEmployees()
+        {
+            try
+            {
+                return Ok(await _repo.GetEmployees(0, 1000));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+        
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)

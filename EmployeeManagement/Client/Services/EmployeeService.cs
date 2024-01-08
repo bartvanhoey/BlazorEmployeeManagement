@@ -19,11 +19,21 @@ namespace EmployeeManagement.Client.Services
         public async Task DeleteEmployee(int employeeId) 
             => await _http.DeleteAsync($"api/employees/{employeeId}");
 
+        public async Task<EmployeeDataResult> GetPagedEmployees(int skip, int take)
+        {
+            return await _http.GetFromJsonAsync<EmployeeDataResult>($"api/employees/paged?skip={skip}&take={take}");
+        }
+
+        
+
         public async Task<Employee> GetEmployee(int id) 
             => await _http.GetFromJsonAsync<Employee>($"api/employees/{id}");
 
-        public async Task<IEnumerable<Employee>> GetEmployees() 
-            => await _http.GetFromJsonAsync<Employee[]>("api/employees");
+        public async Task<IEnumerable<Employee>> GetEmployees()
+        {
+            var employeeDataResult = await _http.GetFromJsonAsync<EmployeeDataResult>("api/employees");
+            return employeeDataResult.Employees;
+        }
 
         public async Task<Employee> UpdateEmployee(Employee employee)
         {

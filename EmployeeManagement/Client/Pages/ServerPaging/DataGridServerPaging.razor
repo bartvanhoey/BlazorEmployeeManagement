@@ -1,0 +1,30 @@
+@page "/server-paging"
+@using EmployeeManagement.Client.Services
+
+
+<SfGrid TValue="Employee" AllowPaging="true">
+    <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(EmployeeDataAdaptor)"> </SfDataManager>
+    <GridPageSettings PageSize="5" PageSizes="@PagerDropDown" PageCount="3"></GridPageSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
+        <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
+        <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+        <GridColumn Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+
+@code{
+
+    public string[] PagerDropDown { get; set; } = { "All", "5", "10", "20" };
+
+    // public List<Employee> Employees { get; set; }
+
+    // [Inject] public IEmployeeService EmployeeService { get; set; }
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     Employees = (await EmployeeService.GetEmployees()).ToList();
+    // }
+
+}

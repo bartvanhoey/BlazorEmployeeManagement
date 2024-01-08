@@ -1,4 +1,5 @@
 using EmployeeManagement.Client;
+using EmployeeManagement.Client.Pages.ServerPaging;
 using EmployeeManagement.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -13,7 +14,6 @@ namespace EmployeeManagement.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
 
             builder.Services.AddAutoMapper(typeof(EmployeeProfile));
             
@@ -34,6 +34,8 @@ namespace EmployeeManagement.Client
             });
 
             builder.Services.AddSyncfusionBlazor();
+
+            builder.Services.AddScoped<EmployeeDataAdaptor>();
 
             await builder.Build().RunAsync();
         }

@@ -27,6 +27,7 @@ namespace EmployeeManagement.API.Repositories
                 await _db.SaveChangesAsync();
                 return dbEmployee;
             }
+
             return null;
         }
 
@@ -36,7 +37,16 @@ namespace EmployeeManagement.API.Repositories
         public async Task<Employee?> GetEmployeeByEmail(string email)
             => await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
 
-        public async Task<IEnumerable<Employee>> GetEmployees() => await _db.Employees.ToListAsync();
+        public async Task<EmployeeDataResult> GetEmployees(int skip = 0, int take = 5)
+        {
+            var result = new EmployeeDataResult()
+            {
+                Employees = _db.Employees.Skip(skip).Take(take),
+                Count = await _db.Employees.CountAsync()
+            };
+
+            return result;
+        }
 
         public async Task<IEnumerable<Employee>> Search(string name, Gender? gender)
         {
@@ -45,7 +55,7 @@ namespace EmployeeManagement.API.Repositories
             if (!string.IsNullOrEmpty(name))
             {
                 query = query.Where(e => e.FirstName.Contains(name)
-                            || e.LastName.Contains(name));
+                                         || e.LastName.Contains(name));
             }
 
             if (gender != null)
@@ -72,6 +82,7 @@ namespace EmployeeManagement.API.Repositories
                 await _db.SaveChangesAsync();
                 return dbEmployee;
             }
+
             return null;
         }
     }
