@@ -2,6 +2,9 @@ using EmployeeManagement.Client;
 using EmployeeManagement.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Syncfusion.Blazor;
+
+
 
 namespace EmployeeManagement.Client
 {
@@ -29,6 +32,8 @@ namespace EmployeeManagement.Client
                 client.BaseAddress = new Uri("https://localhost:7213/");
 
             });
+
+            builder.Services.AddSyncfusionBlazor();
 
             await builder.Build().RunAsync();
         }
