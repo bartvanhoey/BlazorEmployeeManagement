@@ -1,4 +1,6 @@
 using EmployeeManagement.Client;
+using EmployeeManagement.Client.Pages.CustomDataSorting;
+using EmployeeManagement.Client.Pages.GroupingData;
 using EmployeeManagement.Client.Pages.ServerPaging;
 using EmployeeManagement.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
@@ -35,7 +37,8 @@ namespace EmployeeManagement.Client
 
             builder.Services.AddSyncfusionBlazor();
 
-            builder.Services.AddScoped<EmployeeDataAdaptor>();
+            builder.Services.AddScoped<DataGridServerPagingDataAdaptor>();
+            builder.Services.AddScoped<CustomDataSortingDataAdaptor>();
 
             await builder.Build().RunAsync();
         }

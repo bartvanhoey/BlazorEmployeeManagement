@@ -24,7 +24,14 @@ namespace EmployeeManagement.Client.Services
             return await _http.GetFromJsonAsync<EmployeeDataResult>($"api/employees/paged?skip={skip}&take={take}");
         }
 
-        
+        public async Task<EmployeeDataResult> GetCustomSortedEmployees(int skip, int take, string? orderBy = null)
+        {
+            if (string.IsNullOrWhiteSpace(orderBy))
+                return await _http.GetFromJsonAsync<EmployeeDataResult>($"api/employees/paged?skip={skip}&take={take}");
+            return await _http.GetFromJsonAsync<EmployeeDataResult>($"api/employees/custom-sort?skip={skip}&take={take}&orderby={orderBy}");
+
+        }
+
 
         public async Task<Employee> GetEmployee(int id) 
             => await _http.GetFromJsonAsync<Employee>($"api/employees/{id}");

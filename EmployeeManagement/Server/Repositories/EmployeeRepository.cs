@@ -1,7 +1,7 @@
 ﻿using EmployeeManagement.Server;
 using EmployeeManagement.Shared;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Linq.Dynamic.Core;
 
 namespace EmployeeManagement.API.Repositories
 {
@@ -37,15 +37,28 @@ namespace EmployeeManagement.API.Repositories
         public async Task<Employee?> GetEmployeeByEmail(string email)
             => await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
 
-        public async Task<EmployeeDataResult> GetEmployees(int skip = 0, int take = 5)
+        public async Task<EmployeeDataResult> GetEmployees(int skip = 0, int take = 5, string? orderBy = null)
         {
-            var result = new EmployeeDataResult()
+            if (string.IsNullOrWhiteSpace(orderBy))
             {
-                Employees = _db.Employees.Skip(skip).Take(take),
-                Count = await _db.Employees.CountAsync()
-            };
+                var result = new EmployeeDataResult
+                {
+                    Employees = _db.Employees.Skip(skip).Take(take),
+                    Count = await _db.Employees.CountAsync()
+                };
 
-            return result;
+                return result;
+            }
+            else
+            {
+                var result = new EmployeeDataResult
+                {
+                    Employees = _db.Employees.OrderBy(orderBy).Skip(skip).Take(take),
+                    Count = await _db.Employees.CountAsync()
+                };
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<Employee>> Search(string name, Gender? gender)

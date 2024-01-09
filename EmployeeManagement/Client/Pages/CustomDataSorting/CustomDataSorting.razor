@@ -1,10 +1,15 @@
-@page "/server-paging"
+@page "/custom-data-sorting"
 
-<PageTitle>Server Paging</PageTitle>
+<PageTitle>Custom Data Sorting</PageTitle>
 
-<SfGrid TValue="Employee" AllowPaging="true">
-    <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(DataGridServerPagingDataAdaptor)"> </SfDataManager>
+<SfGrid TValue="Employee" AllowPaging="true" AllowSorting="true">
+    <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(CustomDataSortingDataAdaptor)"> </SfDataManager>
     <GridPageSettings PageSize="5" PageSizes="@PagerDropDown" PageCount="3"></GridPageSettings>
+    <GridSortSettings AllowUnsort="false">
+        <GridSortColumns>
+            <GridSortColumn Field="EmployeeId" ></GridSortColumn>
+        </GridSortColumns>
+    </GridSortSettings>
     <GridColumns>
         <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
         <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>

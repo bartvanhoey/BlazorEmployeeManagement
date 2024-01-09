@@ -27,7 +27,23 @@ namespace EmployeeManagement.Server.Controllers
                     "Error retrieving data from the database");
             }
         }
-        
+
+        [HttpGet]
+        [Route("custom-sort")]
+        public async Task<ActionResult> GetCustomSortedEmployees(int skip = 0, int take = 5,
+            string? orderBy = "EmployeeId")
+        {
+            try
+            {
+                return Ok(await _repo.GetEmployees(skip, take, orderBy));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetPagedEmployees()
         {
@@ -41,7 +57,7 @@ namespace EmployeeManagement.Server.Controllers
                     "Error retrieving data from the database");
             }
         }
-        
+
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
@@ -53,11 +69,11 @@ namespace EmployeeManagement.Server.Controllers
                 {
                     return NotFound();
                 }
+
                 return Ok(employee);
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
@@ -67,7 +83,6 @@ namespace EmployeeManagement.Server.Controllers
         {
             try
             {
-
                 if (id != employee.EmployeeId)
                 {
                     return BadRequest("EmployeeId mismatch");
@@ -85,7 +100,6 @@ namespace EmployeeManagement.Server.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
@@ -128,6 +142,7 @@ namespace EmployeeManagement.Server.Controllers
                 {
                     return NotFound($"Employee with Id = {id} not found");
                 }
+
                 return await _repo.DeleteEmployee(id);
             }
             catch (Exception)
@@ -136,9 +151,5 @@ namespace EmployeeManagement.Server.Controllers
                     "Error deleting data");
             }
         }
-
-
-
-
     }
 }

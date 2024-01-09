@@ -4,11 +4,11 @@ using Syncfusion.Blazor.Data;
 
 namespace EmployeeManagement.Client.Pages.ServerPaging;
 
-public class EmployeeDataAdaptor : DataAdaptor
+public class DataGridServerPagingDataAdaptor : DataAdaptor
 {
     private readonly IEmployeeService _employeeService;
 
-    public EmployeeDataAdaptor(IEmployeeService employeeService) => _employeeService = employeeService;
+    public DataGridServerPagingDataAdaptor(IEmployeeService employeeService) => _employeeService = employeeService;
 
     public override async Task<object> ReadAsync(DataManagerRequest dataManagerRequest, string additionalParam = null)
     {
