@@ -1,0 +1,37 @@
+@page "/filtering-data"
+@using EmployeeManagement.Client.Services
+
+<PageTitle>Data Grid Filtering!</PageTitle>
+
+<div style="width:700px">
+    <SfGrid DataSource="@Employees" AllowFiltering="true" AllowPaging="true">
+        <GridFilterSettings Mode="FilterBarMode.Immediate" ImmediateModeDelay="200">
+            <GridFilterColumns>
+                <GridFilterColumn Field="EmployeeId" Operator="Operator.LessThanOrEqual" Value="10"></GridFilterColumn>
+            </GridFilterColumns>
+        </GridFilterSettings>
+        <GridColumns>
+            @* <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID" FilterSettings="@(new FilterSettings { Operator = Operator.LessThanOrEqual })"></GridColumn> *@
+            <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
+            <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.DateOfBrith) HeaderText="Date of Birth"></GridColumn>
+            <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender"></GridColumn>
+            <GridColumn AllowFiltering="false" Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+</div>
+
+
+@code{
+
+    [Inject] IEmployeeService EmployeeService { get; set; }
+    public List<Employee> Employees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Employees = (await EmployeeService.GetEmployees()).ToList();
+    }
+
+
+}

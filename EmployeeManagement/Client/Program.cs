@@ -1,6 +1,4 @@
-using EmployeeManagement.Client;
 using EmployeeManagement.Client.Pages.CustomDataSorting;
-using EmployeeManagement.Client.Pages.GroupingData;
 using EmployeeManagement.Client.Pages.ServerPaging;
 using EmployeeManagement.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
@@ -15,6 +13,8 @@ namespace EmployeeManagement.Client
     {
         public static async Task Main(string[] args)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzA0NzQ1MUAzMjM0MmUzMDJlMzBGTmhPTFc1S3h0WnNwb1ZMaTFqVXNLcHR5TXd2ZXpHVkJCZ3FYR0Q3T0hRPQ==");  
+            
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
             builder.Services.AddAutoMapper(typeof(EmployeeProfile));
