@@ -1,11 +1,10 @@
 @page "/drop-down-filter"
 
 @using EmployeeManagement.Client.Services
-@using EmployeeManagement.Client.Utilities
 @using EmployeeManagement.Client.Utilities.DropdownList
 @using Syncfusion.Blazor.DropDowns
 
-<PageTitle>Data Grid Filtering!</PageTitle>
+<PageTitle>Dropdown in DataGrid</PageTitle>
 
 <div style="width:700px">
     <SfGrid @ref="employeeGrid" DataSource="@Employees" AllowFiltering="true" AllowPaging="true">

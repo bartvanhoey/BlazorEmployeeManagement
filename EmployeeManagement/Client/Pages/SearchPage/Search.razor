@@ -1,0 +1,85 @@
+@page "/search"
+@using EmployeeManagement.Client.Services
+@using Syncfusion.Blazor.Navigations
+@* needed for Syncfusion Toolbar *@
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@* needed for Syncfusion TextBox *@
+
+
+<PageTitle>Search Page</PageTitle>
+
+<SfGrid @ref="EmployeeGrid" DataSource="@Employees" AllowPaging="true">
+    <SfToolbar>
+        <ToolbarItems>
+            <ToolbarItem Type="ItemType.Input" Align="ItemAlign.Right">
+                <Template>
+                    <SfTextBox @ref="SearchTextBox" Placeholder="Search" ></SfTextBox>
+                    @* <SfTextBox Placeholder="Search" Input="OnInput"></SfTextBox> *@
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Type="ItemType.Button" Align="ItemAlign.Right">
+                <Template>
+                    <SfButton Content="Search" OnClick="@SearchClick" > </SfButton>
+                </Template>
+            </ToolbarItem>
+        </ToolbarItems>
+    </SfToolbar>
+    <GridSearchSettings Key="Female" Operator="Operator.Equal"></GridSearchSettings>
+    <GridPageSettings PageSize="5"></GridPageSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
+        <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
+        <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+        <GridColumn Field=@nameof(Employee.DateOfBrith) HeaderText="Date Of Birth"></GridColumn>
+        <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender"></GridColumn>
+        <GridColumn AllowSearching="false" Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+
+@* @{ *@
+@*     var searchTool = new List<string> { "Search" }; *@
+@*     var searchFields = new[] { "FirstName", "LastName" }; *@
+@* } *@
+@* *@
+@* <SfGrid DataSource="@Employees" AllowPaging="true" Toolbar="searchTool"> *@
+@*     $1$ <GridSearchSettings Fields="searchFields"></GridSearchSettings> #1# *@
+@*     <GridSearchSettings Key="Female" Operator="Operator.Equal"></GridSearchSettings> *@
+@*     <GridPageSettings PageSize="5"></GridPageSettings> *@
+@*     <GridColumns> *@
+@*         <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn> *@
+@*         <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn> *@
+@*         <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn> *@
+@*         <GridColumn Field=@nameof(Employee.DateOfBrith) HeaderText="Date Of Birth"></GridColumn> *@
+@*         <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender"></GridColumn> *@
+@*         <GridColumn AllowSearching="false" Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn> *@
+@*     </GridColumns> *@
+@* </SfGrid> *@
+
+@code{
+
+    [Inject] IEmployeeService? EmployeeService { get; set; }
+
+    public SfGrid<Employee>? EmployeeGrid { get; set; }
+    
+    public SfTextBox SearchTextBox { get; set; }
+
+    private List<Employee>? Employees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Employees = (await EmployeeService!.GetEmployees()).ToList();
+    }
+
+    private async void OnInput(InputEventArgs args)
+    {
+        await EmployeeGrid?.SearchAsync(args.Value);
+    }
+
+    private async void SearchClick()
+    {
+        await EmployeeGrid?.SearchAsync(SearchTextBox.Value);
+    }
+
+}
