@@ -15,8 +15,8 @@
                 <FilterItemTemplate>
                     @{
                         var filterContext = (context as FilterItemTemplateContext);
-                        var filterValue = filterContext.Value;
-                        if (Convert.ToInt32(filterValue) <= 9)
+                        var filterValue = filterContext?.Value;
+                        if (filterContext != null & Convert.ToInt32(filterValue) <= 9)
                         {
                             filterValue = "0" + filterValue;
                         }
