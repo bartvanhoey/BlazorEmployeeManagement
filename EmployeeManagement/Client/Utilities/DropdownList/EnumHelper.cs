@@ -1,8 +1,7 @@
-using EmployeeManagement.Client.Pages.DropDownListInDataFilter;
 using static System.Enum;
 using static System.String;
 
-namespace EmployeeManagement.Client.Utilities;
+namespace EmployeeManagement.Client.Utilities.DropdownList;
 
 public static class EnumHelper
 {

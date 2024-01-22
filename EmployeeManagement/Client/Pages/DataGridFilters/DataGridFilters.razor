@@ -1,18 +1,31 @@
-@page "/drop-down-filter"
+@page "/data-grid-filter"
 
 @using EmployeeManagement.Client.Services
-@using EmployeeManagement.Client.Utilities
-@using EmployeeManagement.Client.Utilities.DropdownList
 @using Syncfusion.Blazor.DropDowns
+@using EmployeeManagement.Client.Utilities.DropdownList
+@using FilterType = Syncfusion.Blazor.Grids.FilterType
 
 <PageTitle>Data Grid Filtering!</PageTitle>
 
 <div style="width:700px">
     <SfGrid @ref="employeeGrid" DataSource="@Employees" AllowFiltering="true" AllowPaging="true">
+        <GridFilterSettings Type="FilterType.Menu"></GridFilterSettings>
         <GridColumns>
-            <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
+            <GridColumn FilterSettings="@(new FilterSettings { Type = FilterType.CheckBox })" Field=@nameof(Employee.EmployeeId) HeaderText="ID">
+                <FilterItemTemplate>
+                    @{
+                        var filterContext = (context as FilterItemTemplateContext);
+                        var filterValue = filterContext.Value;
+                        if (Convert.ToInt32(filterValue) <= 9)
+                        {
+                            filterValue = "0" + filterValue;
+                        }
+                        @filterValue
+                    }
+                </FilterItemTemplate>
+            </GridColumn>
             <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
-            <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name" FilterSettings="@(new FilterSettings { Type = FilterType.Excel})"></GridColumn>
             <GridColumn Field=@nameof(Employee.DateOfBrith) HeaderText="Date of Birth"></GridColumn>
             <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender">
                 <FilterTemplate>
@@ -30,7 +43,7 @@
 
 @code{
     public SfGrid<Employee> employeeGrid { get; set; }
-    
+
     [Inject] IEmployeeService EmployeeService { get; set; }
     private List<Employee> Employees { get; set; }
 
@@ -44,15 +57,14 @@
 
     private async Task GenderSelectionChanged(ChangeEventArgs<string, DropDownListItem> args)
     {
-        if (args.Value=="All")
+        if (args.Value == "All")
         {
-           await employeeGrid.ClearFilteringAsync("Gender");
+            await employeeGrid.ClearFilteringAsync("Gender");
         }
         else
         {
             await employeeGrid.FilterByColumnAsync("Gender", "equal", args.Value);
         }
-        
     }
 
 }

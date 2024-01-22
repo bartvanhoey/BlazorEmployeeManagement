@@ -1,4 +1,4 @@
-namespace EmployeeManagement.Client.Pages.DropDownListInDataFilter;
+namespace EmployeeManagement.Client.Utilities.DropdownList;
 
 public class DropDownListItem
 {
