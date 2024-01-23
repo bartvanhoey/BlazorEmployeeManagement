@@ -1,7 +1,6 @@
 ﻿using EmployeeManagement.Shared;
-using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
+
 
 namespace EmployeeManagement.Client.Services
 {

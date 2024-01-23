@@ -43,7 +43,7 @@ namespace EmployeeManagement.API.Repositories
             {
                 var result = new EmployeeDataResult
                 {
-                    Employees = _db.Employees.Skip(skip).Take(take),
+                    Employees = _db.Employees.Include(e => e.Department).Skip(skip).Take(take),
                     Count = await _db.Employees.CountAsync()
                 };
 
