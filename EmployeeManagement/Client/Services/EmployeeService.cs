@@ -9,8 +9,10 @@ namespace EmployeeManagement.Client.Services
 
         public EmployeeService(HttpClient httpClient) => _http=httpClient;
 
-        public async Task<Employee> CreateEmployee(Employee employee)
+        public async Task<Employee?> CreateEmployee(Employee? employee)
         {
+            if (employee == null) return null;
+            employee.Department = null;
             var response = await _http.PostAsJsonAsync("api/employees", employee);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<Employee>();
@@ -19,12 +21,12 @@ namespace EmployeeManagement.Client.Services
         public async Task DeleteEmployee(int employeeId) 
             => await _http.DeleteAsync($"api/employees/{employeeId}");
 
-        public async Task<EmployeeDataResult> GetPagedEmployees(int skip, int take)
+        public async Task<EmployeeDataResult?> GetPagedEmployees(int skip, int take)
         {
             return await _http.GetFromJsonAsync<EmployeeDataResult>($"api/employees/paged?skip={skip}&take={take}");
         }
 
-        public async Task<EmployeeDataResult> GetCustomSortedEmployees(int skip, int take, string? orderBy = null)
+        public async Task<EmployeeDataResult?> GetCustomSortedEmployees(int skip, int take, string? orderBy = null)
         {
             if (string.IsNullOrWhiteSpace(orderBy))
                 return await _http.GetFromJsonAsync<EmployeeDataResult>($"api/employees/paged?skip={skip}&take={take}");
@@ -33,7 +35,7 @@ namespace EmployeeManagement.Client.Services
         }
 
 
-        public async Task<Employee> GetEmployee(int id) 
+        public async Task<Employee?> GetEmployee(int id) 
             => await _http.GetFromJsonAsync<Employee>($"api/employees/{id}");
 
         public async Task<IEnumerable<Employee>> GetEmployees()
@@ -42,7 +44,7 @@ namespace EmployeeManagement.Client.Services
             return employeeDataResult.Employees;
         }
 
-        public async Task<Employee> UpdateEmployee(Employee employee)
+        public async Task<Employee?> UpdateEmployee(Employee? employee)
         {
             var response = await _http.PutAsJsonAsync($"api/employees/{employee.EmployeeId}", employee);
             response.EnsureSuccessStatusCode();

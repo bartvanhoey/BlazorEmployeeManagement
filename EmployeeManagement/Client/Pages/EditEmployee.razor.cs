@@ -11,7 +11,7 @@ namespace EmployeeManagement.Client.Pages
         [Parameter]
         public string Id { get; set; }
 
-        private Employee Employee{ get; set; } = new Employee();
+        private Employee? Employee{ get; set; } = new Employee();
         public EditEmployeeModel EditEmployeeModel { get; set; } = new EditEmployeeModel();
 
         [Inject]
@@ -36,7 +36,7 @@ namespace EmployeeManagement.Client.Pages
         {
             Mapper.Map(EditEmployeeModel, Employee);
 
-            Employee result = null;
+            Employee? result = null;
 
             if(Employee.EmployeeId == 0)
             {

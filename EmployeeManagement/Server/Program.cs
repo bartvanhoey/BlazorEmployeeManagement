@@ -1,5 +1,6 @@
 using EmployeeManagement.API.Repositories;
 using EmployeeManagement.Server;
+using EmployeeManagement.Server.Repositories;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 

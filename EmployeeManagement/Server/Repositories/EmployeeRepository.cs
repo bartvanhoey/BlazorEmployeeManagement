@@ -1,18 +1,31 @@
-﻿using EmployeeManagement.Server;
+﻿using System.Linq.Dynamic.Core;
+using EmployeeManagement.API.Repositories;
+using EmployeeManagement.Client.Services;
 using EmployeeManagement.Shared;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
 
-namespace EmployeeManagement.API.Repositories
+namespace EmployeeManagement.Server.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly AppDbContext _db;
+        private readonly IDepartmentRepository _departmentRepository;
 
-        public EmployeeRepository(AppDbContext appDbContext) => _db = appDbContext;
+        public EmployeeRepository(AppDbContext appDbContext, IDepartmentRepository departmentRepository)
+        {
+            _db = appDbContext;
+            _departmentRepository = departmentRepository;
+        }
 
         public async Task<Employee> AddEmployee(Employee employee)
         {
+            if (employee.DepartmentId == 0) throw new Exception("DepartmentId cannot be ZERO");
+
+            var department = await _departmentRepository.GetDepartment(employee.DepartmentId);
+            if (department == null) throw new Exception($"Invalid department id {employee.DepartmentId} ");
+            
+            employee.Department = department;
+
             var result = await _db.Employees.AddAsync(employee);
             await _db.SaveChangesAsync();
             return result.Entity;

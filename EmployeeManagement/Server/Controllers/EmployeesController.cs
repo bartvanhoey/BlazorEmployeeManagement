@@ -105,15 +105,12 @@ namespace EmployeeManagement.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
+        public async Task<ActionResult<Employee>> CreateEmployee(Employee? employee)
         {
             try
             {
-                if (employee == null)
-                {
-                    return BadRequest();
-                }
-
+                if (employee == null) return BadRequest();
+                
                 var dbEmployee = await _repo.GetEmployeeByEmail(employee.Email);
                 if (dbEmployee != null)
                 {

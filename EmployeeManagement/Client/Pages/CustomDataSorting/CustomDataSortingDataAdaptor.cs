@@ -1,4 +1,5 @@
 using EmployeeManagement.Client.Services;
+using EmployeeManagement.Shared;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 

@@ -14,7 +14,7 @@ namespace EmployeeManagement.Client.Pages
         [Inject]
         public IEmployeeService EmployeeService{ get; set; }
 
-        public Employee Employee { get; set; } = new Employee();
+        public Employee? Employee { get; set; } = new Employee();
 
         public string Coordinates { get; set; } = "";
 
